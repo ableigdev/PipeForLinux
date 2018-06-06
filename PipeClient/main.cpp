@@ -18,7 +18,6 @@ int main()
 
     char arr1[80];
     char arr2[80];
-    int c;
 
     while (true)
     {
