@@ -5,7 +5,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <string>
 
+#define STRING_SIZE 80
 
 int main()
 {
@@ -16,23 +18,24 @@ int main()
 
     mkfifo(myfifo, 0666);
 
-    char arr1[80];
-    char arr2[80];
+    std::string str;
+    str.resize(STRING_SIZE);
 
-    while (true)
-    {
-        fd = open (myfifo, O_WRONLY);
-        fgets(arr2, 80, stdin);
+    std::string str2;
+    str2.resize(STRING_SIZE);
 
-        write (fd, arr2, strlen(arr2) + 1);
-        close(fd);
+    fd = open (myfifo, O_WRONLY);
+    std::cin >> str;
 
-        fd = open (myfifo, O_RDONLY);
-        read(fd, arr1, sizeof(arr1));
+    write (fd, str.data(), str.size() + 1);
+    close(fd);
 
-        std::cout << "User2: " << arr1 << std::endl;
-        close(fd);
-    }
+    fd = open (myfifo, O_RDONLY);
+    read(fd, &str2.at(0), sizeof(str2));
+
+    std::cout << "User2: " << str2.data() << std::endl;
+    close(fd);
+
 
 
     return 0;
