@@ -12,10 +12,10 @@
 
 int main()
 {
-    std::regex logPassRegex("(.*)\\/(.*)");
+    std::regex logPassRegex(R"(^([\w]+)\/([\w]+)$)");
     std::cmatch pieces_match;
 
-    int fd1;
+    int fd1 = 0;
 
     const char* myfifo = "/tmp/myfifo";
 
